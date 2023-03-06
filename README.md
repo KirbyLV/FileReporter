@@ -1,2 +1,2 @@
-# FileReported
+# FileReporter
 Xojo FileReporter App
