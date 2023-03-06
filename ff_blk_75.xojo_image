@@ -2,8 +2,8 @@
 Image ff_blk_75
 	#tag ImageRepresentation
 		SaveInfo = APHRcwIAAAA=
-		FullPath = /Users/jspodick/Documents/Xojo/collected project/Images/FFMPEG_blk_75.png
-		PartialPath = ..\..\Xojo\collected project\Images\FFMPEG_blk_75.png
+		FullPath = /Users/jspodick/Documents/Xojo/Logo/FFMPEG_blk_75.png
+		PartialPath = ..\..\Xojo\Logo\FFMPEG_blk_75.png
 		#tag ImageSpecification
 			Comment = 
 			Device = 31
