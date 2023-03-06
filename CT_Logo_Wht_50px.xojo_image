@@ -2,8 +2,8 @@
 Image CT_Logo_Wht_50px
 	#tag ImageRepresentation
 		SaveInfo = APHRcwIAAAA=
-		FullPath = /Users/jspodick/Documents/Xojo/collected project/Images/CT_Logo_Wht_50px.png
-		PartialPath = ..\..\Xojo\collected project\Images\CT_Logo_Wht_50px.png
+		FullPath = /Users/jspodick/Documents/Xojo/Logo/CT_Logo_Wht_50px.png
+		PartialPath = ..\..\Xojo\Logo\CT_Logo_Wht_50px.png
 		#tag ImageSpecification
 			Comment = 
 			Device = 31
