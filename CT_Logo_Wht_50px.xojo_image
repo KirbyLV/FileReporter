@@ -1,0 +1,40 @@
+#tag MultiImage
+Image CT_Logo_Wht_50px
+	#tag ImageRepresentation
+		SaveInfo = APHRcwIAAAA=
+		FullPath = /Users/jspodick/Documents/Xojo/collected project/Images/CT_Logo_Wht_50px.png
+		PartialPath = ..\..\Xojo\collected project\Images\CT_Logo_Wht_50px.png
+		#tag ImageSpecification
+			Comment = 
+			Device = 31
+			HSize = 50.00
+			Orientation = Any
+			Platform = 15
+			PPI = 72
+			VSize = 50.00
+		#tag EndImageSpecification
+	#tag EndImageRepresentation
+	#tag ImageRepresentation
+		#tag ImageSpecification
+			Comment = 
+			Device = 31
+			HSize = 50.00
+			Orientation = Any
+			Platform = 15
+			PPI = 144
+			VSize = 50.00
+		#tag EndImageSpecification
+	#tag EndImageRepresentation
+	#tag ImageRepresentation
+		#tag ImageSpecification
+			Comment = 
+			Device = 31
+			HSize = 50.00
+			Orientation = Any
+			Platform = 15
+			PPI = 216
+			VSize = 50.00
+		#tag EndImageSpecification
+	#tag EndImageRepresentation
+End Image
+#tag EndMultiImage

@@ -1,0 +1,82 @@
+#tag FileTypeSet
+	#tag FileType
+		CodeName=Text
+		Extension=.asc;.ascii;.bas;.c;.class;.cp;.cpp;.h;.hp;.hpp;.i3;.java;.m2;.m3;.mak;.text;.txt
+		Flags=&h5
+		MacCreator=
+		MacType=TEXT
+		Name=text/plain
+		UTI=public.text
+		UTIConformsTo=public.data, public.content
+		Description=
+		MimeType=
+		Imported=True
+		HandlerRank=&h9
+		UTIPhysicalType=public.data
+	#tag EndFileType
+
+	#tag FileType
+		CodeName=VideoQuicktime
+		Extension=.moov;.mov;.qt;.mqv
+		Flags=&h9
+		MacCreator=
+		MacType=MooV
+		Name=video/quicktime
+		UTI=com.apple.quicktime-movie
+		UTIConformsTo=,public.data
+		Description=
+		MimeType=
+		Imported=True
+		HandlerRank=&h9
+		UTIPhysicalType=public.data
+	#tag EndFileType
+
+	#tag FileType
+		CodeName=Mpeg
+		Extension=.mpe;.mpeg;.mpg;.m1s;.m1v;.m1a;.m75;.m15;.mp2;.mpm;.mpv;.mpa
+		Flags=&h9
+		MacCreator=
+		MacType=MPEG
+		Name=video/mpeg
+		UTI=public.mpeg
+		UTIConformsTo=public.movie,public.data
+		Description=
+		MimeType=
+		Imported=True
+		HandlerRank=&h9
+		UTIPhysicalType=public.data
+	#tag EndFileType
+
+	#tag FileType
+		CodeName=Png
+		Extension=.png
+		Flags=&h9
+		MacCreator=
+		MacType=PNGf
+		Name=image/png
+		UTI=public.png
+		UTIConformsTo=public.image,public.data
+		Description=
+		MimeType=
+		Imported=True
+		HandlerRank=&h9
+		UTIPhysicalType=public.data
+	#tag EndFileType
+
+	#tag FileType
+		CodeName=Csv
+		Extension=.csv
+		Flags=&h5
+		MacCreator=
+		MacType=TEXT
+		Name=csv
+		UTI=public.text
+		UTIConformsTo=public.data, public.content
+		Description=
+		MimeType=
+		Imported=True
+		HandlerRank=&h9
+		UTIPhysicalType=public.data
+	#tag EndFileType
+
+#tag EndFileTypeSet
