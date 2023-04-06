@@ -105,8 +105,8 @@ Begin DesktopWindow FileReporter
       AllowRowDragging=   False
       AllowRowReordering=   False
       Bold            =   False
-      ColumnCount     =   6
-      ColumnWidths    =   "*,*,150,100,100,150"
+      ColumnCount     =   7
+      ColumnWidths    =   ""
       DefaultRowHeight=   -1
       DropIndicatorVisible=   False
       Enabled         =   True
@@ -121,7 +121,7 @@ Begin DesktopWindow FileReporter
       HeadingIndex    =   -1
       Height          =   194
       Index           =   -2147483648
-      InitialValue    =   "File	Location	Codec	Width	Height	Duration"
+      InitialValue    =   "File	Location	Codec	Width	Height	FrameRate	Duration"
       Italic          =   False
       Left            =   20
       LockBottom      =   True
@@ -524,6 +524,35 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function fnframerate(Path As String) As String
+		  Dim ffmpeg As String
+		  
+		  If TargetMacOS Then
+		    ffmpeg = ffDest
+		    
+		  ElseIf TargetWindows Then
+		    ffmpeg = "ffprobe "
+		  End If
+		  
+		  Dim frameratestream As String
+		  frameratestream = " -v error -hide_banner -select_streams v:0 -show_entries stream=r_frame_rate -of default=noprint_wrappers=1 "
+		  
+		  Dim quote As String
+		  If TargetMacOS Then
+		    quote = "'"
+		  ElseIf TargetWindows Then
+		    quote = Chr(34)
+		  End If
+		  
+		  Var Output As String
+		  Output = ffmpeg + frameratestream + quote + Path + quote
+		  
+		  Return Output
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function fnheight(Path As String) As String
 		  Dim ffmpeg As String
 		  If TargetMacOS Then
@@ -627,7 +656,7 @@ End
 		  Else
 		    //User Cancelled
 		  End If
-		   
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -787,6 +816,8 @@ End
 #tag Events ExecButton
 	#tag Event
 		Sub Pressed()
+		  ProcessingWindow.Show
+		  
 		  //Set variables and establish ffMPEG Shell
 		  Var cr As Integer
 		  cr=0
@@ -851,6 +882,7 @@ End
 		                  Dim ff2width As String
 		                  Dim ff2height As String
 		                  Dim ff2Duration As String
+		                  Dim ff2framerate As String
 		                  
 		                  If File2.Name.Contains(".png") Or File2.Name.Contains(".jpg") Or File2.Name.Contains(".mov") Or File2.Name.Contains(".mp4") Then
 		                    If ffDest <> "" Then
@@ -887,26 +919,38 @@ End
 		                        App.DoEvents
 		                      Loop Until Not theShell.IsRunning
 		                      
+		                      //Frame Rate value
+		                      theShell.Execute fnframerate(File2.NativePath)
+		                      Do
+		                        theShell.Poll
+		                        ff2framerate = theShell.Result
+		                        App.DoEvents
+		                      Loop Until Not theShell.IsRunning
+		                      
 		                    Else
 		                      ff2 = "FFMpeg Not Setup"
 		                      ff2width = "FFMpeg Not Setup"
 		                      ff2height = "FFMpeg Not Setup"
 		                      ff2Duration = "FFMpeg Not Setup"
+		                      ff2framerate = "FFMpeg Not Setup"
 		                    End If
 		                  Else
 		                    ff2 = ""
 		                    ff2width = ""
 		                    ff2height = ""
 		                    ff2Duration = ""
+		                    ff2framerate = ""
 		                  End If
 		                  Var ff2res As String
-		                  ff2res = ff2width + " " + ff2height
-		                  ff2 = ReplaceAll(ff2, chr(10), "")
-		                  ff2width = ReplaceAll(ff2width, chr(10),"")
-		                  ff2height = ReplaceAll(ff2height, chr(10), "")
-		                  ff2Duration = ReplaceAll(ff2Duration, chr(10), "")
 		                  
-		                  FileList.AddRow(File2.Name, File2.NativePath, ff2, ff2width, ff2height, ff2Duration)
+		                  ff2 = ReplaceAll(ff2, "codec_name=", "")
+		                  ff2width = ReplaceAll(ff2width, "Width=","")
+		                  ff2height = ReplaceAll(ff2height, "Height=", "")
+		                  ff2res = ff2width + " x " + ff2height
+		                  ff2Duration = ReplaceAll(ff2Duration, "duration=", "")
+		                  ff2framerate = ReplaceAll(ff2framerate, "r_frame_rate=","")
+		                  
+		                  FileList.AddRow(File2.Name, File2.NativePath, ff2, ff2width, ff2height, ff2framerate, ff2Duration)
 		                Next
 		              Else
 		                //ffMPEG setup tree level 1
@@ -914,6 +958,7 @@ End
 		                Dim ff1width As String
 		                Dim ff1height As String
 		                Dim ff1Duration As String
+		                Dim ff1FrameRate As String
 		                
 		                If File1.Name.Contains(".png")  Or File1.Name.Contains(".jpg") Or File1.Name.Contains(".mov") Or File1.Name.Contains(".mp4") Then
 		                  
@@ -950,27 +995,38 @@ End
 		                      App.DoEvents
 		                    Loop Until Not theShell.IsRunning
 		                    
+		                    //Frame Rate value
+		                    theShell.Execute fnframerate(File1.NativePath)
+		                    Do
+		                      theShell.Poll
+		                      ff1framerate = theShell.Result
+		                      App.DoEvents
+		                    Loop Until Not theShell.IsRunning
+		                    
 		                  Else
 		                    ff1 = "FFMpeg Not Setup"
 		                    ff1width = "FFMpeg Not Setup"
 		                    ff1height = "FFMpeg Not Setup"
 		                    ff1Duration = "FFMpeg Not Setup"
+		                    ff1FrameRate = "FFMpeg Not Setup"
 		                  End If
 		                Else
 		                  ff1 = ""
 		                  ff1width = ""
 		                  ff1height = ""
 		                  ff1Duration = ""
+		                  ff1FrameRate = ""
 		                End If
 		                Var ff1res As String
-		                ff1res = ff1width + " " + ff1height
-		                ff1 = ReplaceAll(ff1, chr(10), "")
-		                ff1width = ReplaceAll(ff1width, chr(10),"")
-		                ff1height = ReplaceAll(ff1height, chr(10), "")
-		                ff1Duration = ReplaceAll(ff1Duration, chr(10), "")
+		                ff1 = ReplaceAll(ff1, "codec_name=", "")
+		                ff1width = ReplaceAll(ff1width, "Width=","")
+		                ff1height = ReplaceAll(ff1height, "Height=", "")
+		                ff1res = ff1width + " x " + ff1height
+		                ff1Duration = ReplaceAll(ff1Duration, "duration=", "")
+		                ff1FrameRate = ReplaceAll(ff1FrameRate, "r_frame_rate=", "")
 		                
 		                
-		                FileList.AddRow(file1.Name, File1.NativePath, ff1, ff1width, ff1height, ff1Duration)
+		                FileList.AddRow(file1.Name, File1.NativePath, ff1, ff1width, ff1height, ff1FrameRate, ff1Duration)
 		              End If
 		            Next
 		            
@@ -980,6 +1036,7 @@ End
 		            Dim ff0width As String
 		            Dim ff0height As String
 		            Dim ff0Duration As String
+		            Dim ff0FrameRate As String
 		            
 		            If File0.Name.Contains(".png") Or File0.Name.Contains(".jpg")  Or File0.Name.Contains(".mov") Or File0.Name.Contains(".mp4") Then
 		              
@@ -1016,27 +1073,37 @@ End
 		                  App.DoEvents
 		                Loop Until Not theShell.IsRunning
 		                
+		                //Frame Rate value
+		                theShell.Execute fnframerate(File0.NativePath)
+		                Do
+		                  theShell.Poll
+		                  ff0framerate = theShell.Result
+		                  App.DoEvents
+		                Loop Until Not theShell.IsRunning
+		                
 		              Else
 		                ff0 = "FFMpeg Not Setup"
 		                ff0width = "FFMpeg Not Setup"
 		                ff0height = "FFMpeg Not Setup"
 		                ff0Duration = "FFMpeg Not Setup"
+		                ff0FrameRate = "FFMpeg Not Setup"
 		              End If
 		            Else
 		              ff0 = ""
 		              ff0width = ""
 		              ff0height = ""
 		              ff0Duration = ""
+		              ff0FrameRate = ""
 		            End If
 		            Var ff0res As String
-		            ff0res = ff0width + " " + ff0height
-		            ff0 = ReplaceAll(ff0, chr(10), "")
-		            ff0width = ReplaceAll(ff0width, chr(10),"")
-		            ff0height = ReplaceAll(ff0height, chr(10), "")
-		            ff0Duration = ReplaceAll(ff0Duration, chr(10), "")
+		            ff0 = ReplaceAll(ff0, "codec_name=", "")
+		            ff0width = ReplaceAll(ff0width, "Width=","")
+		            ff0height = ReplaceAll(ff0height, "Height=", "")
+		            ff0res = ff0width + " x " + ff0height
+		            ff0Duration = ReplaceAll(ff0Duration, "duration=", "")
+		            ff0FrameRate = ReplaceAll(ff0FrameRate, "r_frame_rate=", "")
 		            
-		            
-		            FileList.AddRow(File0.Name, File0.NativePath,ff0,ff0width, ff0height, ff0Duration)
+		            FileList.AddRow(File0.Name, File0.NativePath, ff0, ff0width, ff0height, ff0FrameRate, ff0Duration)
 		          End If
 		          
 		        Next
@@ -1047,18 +1114,23 @@ End
 		        FileList.Sort
 		        
 		      Else
+		        ProcessingWindow.Close
 		        MessageBox("Check Folder Permissions!")
 		      End If
 		    Else
+		      ProcessingWindow.Close
 		      MessageBox("The Selected Location Is Not a Content Folder")
 		    End If
 		  Else
+		    ProcessingWindow.Close
 		    MessageBox("The Selected Path Does Not Exist")
 		  End If
 		  
 		  If ffDest = "" Then
+		    ProcessingWindow.Close
 		    MessageBox("File List Completed. Set FFProbe Location in File > Preferences to Add Analysis.")
 		  Else
+		    ProcessingWindow.Close
 		    MessageBox("File Analysis Completed")
 		  End If
 		  

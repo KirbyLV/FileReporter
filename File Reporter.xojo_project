@@ -9,6 +9,7 @@ DesktopWindow=FileRules;FileRules.xojo_window;&h0000000065042FFF;&h0000000000000
 DesktopWindow=PrefWindow;PrefWindow.xojo_window;&h0000000043C11FFF;&h0000000000000000;false
 DesktopWindow=AboutWindow;AboutWindow.xojo_window;&h000000001E5DDFFF;&h0000000000000000;false
 DesktopWindow=FFMPEGWindow;FFMPEGWindow.xojo_window;&h000000002444D7FF;&h0000000000000000;false
+DesktopWindow=ProcessingWindow;ProcessingWindow.xojo_window;&h00000000030C5FFF;&h0000000000000000;false
 MenuBar=MainMenuBar;MainMenuBar.xojo_menu;&h0000000064C3B7FF;&h0000000000000000;false
 MultiImage=ff_blk_75;ff_blk_75.xojo_image;&h0000000052F83FFF;&h0000000000000000;false
 FileTypeSet=FileTypeGroup1;FileTypeGroup1.xojo_filetypeset;&h000000003E44FFFF;&h0000000000000000;false
