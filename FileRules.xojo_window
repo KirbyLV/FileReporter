@@ -96,7 +96,7 @@ Begin DesktopWindow FileRules
       FontUnit        =   0
       Height          =   20
       Index           =   -2147483648
-      InitialValue    =   "Select Acceptable Codecs\nD3 - NotchLC, HAP, PNG\nPixera - NotchLC, HAP, VP9, DDS\nMillumin - ProRes, HAP, PNG\nResolume - DXV\nHippotizer - HAP, Whatever Cory wants"
+      InitialValue    =   "Select Acceptable Codecs\nD3 - NotchLC, HAP, PNG\nPixera - NotchLC, HAP, VP9, DDS\nMillumin - ProRes, HAP, PNG\nResolume - DXV\nHippotizer - Coming Soon"
       Italic          =   False
       Left            =   20
       LockBottom      =   False

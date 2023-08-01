@@ -105,7 +105,7 @@ Begin DesktopWindow AboutWindow
       TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
-      Text            =   "File Reporter\nBeta 0.4"
+      Text            =   "File Reporter\nv2.0"
       TextAlignment   =   2
       TextColor       =   &cF8C51D00
       Tooltip         =   ""
@@ -122,10 +122,10 @@ Begin DesktopWindow AboutWindow
       FontName        =   "System"
       FontSize        =   0.0
       FontUnit        =   0
-      Height          =   288
+      Height          =   297
       Index           =   -2147483648
       Italic          =   False
-      Left            =   20
+      Left            =   8
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -137,7 +137,7 @@ Begin DesktopWindow AboutWindow
       TabIndex        =   3
       TabPanelIndex   =   0
       TabStop         =   True
-      Text            =   "Created Feb 2023 by Josh Spodick\n\nThis is completely beta software, as I have never really written an applicaiton before. I appreciate any help in making this better, but complaints that are not helpfull will be filed in the ""fuck off"" pile.\n\nThis is written to identify files ending in "".mov"", "".mp4"", "".png"", "".jpg"" as that is most of the media files we have to deal with on a daily basis.\n\nThis software relies heavily on FFMPEG being installed and accessible. Thanks to the entire FFMPEG team for creating some awesome free software. And thank you to the Propellerheads and Media Server Professionals that have helped me along and pushed for me to learn how to make this.\n\nThank you to Darren Alexander, CT, and Wookiesoft for giving me plenty of downtime on an autoshow to write this, and to Merlin Alexander for the logo art."
+      Text            =   "Initially Created Feb 2023 by Josh Spodick\n\nThis is completely beta software, as I have never really written an applicaiton before. I appreciate any help in making this better, but complaints that are not helpfull will be filed in the ""fuck off"" pile.\n\nThis is written to identify files ending in "".mov"", "".mp4"", "".png"", "".jpg"" as that is most of the media files we have to deal with on a daily basis.\n\nThis software relies heavily on FFMPEG being installed and accessible. Thanks to the entire FFMPEG team for creating some awesome free software. And thank you to the Propellerheads and Media Server Professionals that have helped me along and pushed for me to learn how to make this.\n\nThank you to Darren Alexander, CT, and Wookiesoft for giving me plenty of downtime on an autoshow to write this, and to Merlin Alexander for the logo art. To Chris Merriman, Alok Wadhwani, and Cory Froke for the feature suggestions."
       TextAlignment   =   0
       TextColor       =   &c000000
       Tooltip         =   ""
@@ -145,7 +145,7 @@ Begin DesktopWindow AboutWindow
       Transparent     =   False
       Underline       =   False
       Visible         =   True
-      Width           =   560
+      Width           =   585
    End
    Begin Canvas CT_Logo
       AllowAutoDeactivate=   True
@@ -190,12 +190,24 @@ End
 #tag Events CT_Logo
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		  #If TargetMacOS
+		    #pragma unused Y
+		  #EndIf
+		  #If TargetMacOS
+		    #pragma unused X
+		  #EndIf
 		  
 		  return true
 		End Function
 	#tag EndEvent
 	#tag Event
 		Sub MouseUp(X As Integer, Y As Integer)
+		  #If TargetMacOS
+		    #pragma unused Y
+		  #EndIf
+		  #If TargetMacOS
+		    #pragma unused X
+		  #EndIf
 		  System.GotoURL("https://www.ctus.com")
 		End Sub
 	#tag EndEvent

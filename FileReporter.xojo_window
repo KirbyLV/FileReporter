@@ -105,7 +105,7 @@ Begin DesktopWindow FileReporter
       AllowRowDragging=   False
       AllowRowReordering=   False
       Bold            =   False
-      ColumnCount     =   7
+      ColumnCount     =   9
       ColumnWidths    =   ""
       DefaultRowHeight=   -1
       DropIndicatorVisible=   False
@@ -121,7 +121,7 @@ Begin DesktopWindow FileReporter
       HeadingIndex    =   -1
       Height          =   194
       Index           =   -2147483648
-      InitialValue    =   "File	Location	Codec	Width	Height	FrameRate	Duration"
+      InitialValue    =   "File	Location	Codec	Width	Height	FrameRate	Duration	Audio Codec	Audio Channels"
       Italic          =   False
       Left            =   20
       LockBottom      =   True
@@ -468,6 +468,64 @@ End
 
 
 	#tag Method, Flags = &h0
+		Function fnaudiochannels(path as String) As String
+		  Dim ffmpeg As String
+		  
+		  If TargetMacOS Then
+		    ffmpeg = ffDest
+		    
+		  ElseIf TargetWindows Then
+		    ffmpeg = "ffprobe "
+		  End If
+		  
+		  Dim audiostream as string
+		  audiostream = " -v error -hide_banner -select_streams a -show_entries stream=channels -of default=noprint_wrappers=1 "
+		  
+		  Dim quote As String
+		  If TargetMacOS Then
+		    quote = "'"
+		  ElseIf TargetWindows Then
+		    quote = Chr(34)
+		  End If
+		  
+		  Var Output As String
+		  Output = ffmpeg + audiostream + quote + Path + quote
+		  
+		  Return Output
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function fnaudiocodec(path as String) As String
+		  Dim ffmpeg As String
+		  
+		  If TargetMacOS Then
+		    ffmpeg = ffDest
+		    
+		  ElseIf TargetWindows Then
+		    ffmpeg = "ffprobe "
+		  End If
+		  
+		  Dim audiostream as string
+		  audiostream = " -v error -hide_banner -select_streams a -show_entries stream=codec_name -of default=noprint_wrappers=1 "
+		  
+		  Dim quote As String
+		  If TargetMacOS Then
+		    quote = "'"
+		  ElseIf TargetWindows Then
+		    quote = Chr(34)
+		  End If
+		  
+		  Var Output As String
+		  Output = ffmpeg + audiostream + quote + Path + quote
+		  
+		  Return Output
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function fncodec(Path As String) As String
 		  Dim ffmpeg As String
 		  
@@ -490,6 +548,8 @@ End
 		  
 		  Var Output As String
 		  Output = ffmpeg + codecstream + quote + Path + quote
+		  
+		  Output = ReplaceAll(output, "codec_name=", "")
 		  
 		  Return Output
 		  
@@ -517,6 +577,8 @@ End
 		  
 		  Var Output As String
 		  Output = ffmpeg + duration + quote + Path + quote
+		  
+		  Output = ReplaceAll(output, "duration=", "")
 		  
 		  Return Output
 		  
@@ -547,6 +609,8 @@ End
 		  Var Output As String
 		  Output = ffmpeg + frameratestream + quote + Path + quote
 		  
+		  Output = ReplaceAll(Output, "r_frame_rate=","")
+		  
 		  Return Output
 		  
 		End Function
@@ -574,6 +638,8 @@ End
 		  Var Output As String
 		  Output = ffmpeg + height + quote + Path + quote
 		  
+		  Output = ReplaceAll(output, "height=", "")
+		  
 		  Return Output
 		End Function
 	#tag EndMethod
@@ -600,6 +666,8 @@ End
 		  
 		  Var Output As String
 		  Output = ffmpeg + width + quote + Path + quote
+		  
+		  Output = ReplaceAll(output, "width=", "")
 		  
 		  Return Output
 		  
@@ -883,6 +951,8 @@ End
 		                  Dim ff2height As String
 		                  Dim ff2Duration As String
 		                  Dim ff2framerate As String
+		                  Dim ff2audiocodec As String
+		                  Dim ff2audiochannels As String
 		                  
 		                  If File2.Name.Contains(".png") Or File2.Name.Contains(".jpg") Or File2.Name.Contains(".mov") Or File2.Name.Contains(".mp4") Then
 		                    If ffDest <> "" Then
@@ -927,12 +997,30 @@ End
 		                        App.DoEvents
 		                      Loop Until Not theShell.IsRunning
 		                      
+		                      //Audio Codec value
+		                      theShell.Execute fnaudiocodec(File2.NativePath)
+		                      Do
+		                        theShell.Poll
+		                        ff2audiocodec = theShell.Result
+		                        App.DoEvents
+		                      Loop Until Not theShell.IsRunning
+		                      
+		                      //Audio Channels value
+		                      theShell.Execute fnaudiochannels(File2.NativePath)
+		                      Do
+		                        theShell.Poll
+		                        ff2audiochannels = theShell.Result
+		                        App.DoEvents
+		                      Loop Until Not theShell.IsRunning
+		                      
 		                    Else
 		                      ff2 = "FFMpeg Not Setup"
 		                      ff2width = "FFMpeg Not Setup"
 		                      ff2height = "FFMpeg Not Setup"
 		                      ff2Duration = "FFMpeg Not Setup"
 		                      ff2framerate = "FFMpeg Not Setup"
+		                      ff2audiocodec = "FFMpeg Not Setup"
+		                      ff2audiochannels = "FFMpeg Not Setup"
 		                    End If
 		                  Else
 		                    ff2 = ""
@@ -940,6 +1028,8 @@ End
 		                    ff2height = ""
 		                    ff2Duration = ""
 		                    ff2framerate = ""
+		                    ff2audiocodec = ""
+		                    ff2audiochannels = ""
 		                  End If
 		                  Var ff2res As String
 		                  
@@ -949,8 +1039,10 @@ End
 		                  ff2res = ff2width + " x " + ff2height
 		                  ff2Duration = ReplaceAll(ff2Duration, "duration=", "")
 		                  ff2framerate = ReplaceAll(ff2framerate, "r_frame_rate=","")
+		                  ff2audiocodec = ReplaceAll(ff2audiocodec, "codec_name=", "")
+		                  ff2audiochannels = ReplaceAll(ff2audiochannels, "channels=", "")
 		                  
-		                  FileList.AddRow(File2.Name, File2.NativePath, ff2, ff2width, ff2height, ff2framerate, ff2Duration)
+		                  FileList.AddRow(File2.Name, File2.NativePath, ff2, ff2width, ff2height, ff2framerate, ff2Duration, ff2audiocodec, ff2audiochannels)
 		                Next
 		              Else
 		                //ffMPEG setup tree level 1
@@ -959,6 +1051,8 @@ End
 		                Dim ff1height As String
 		                Dim ff1Duration As String
 		                Dim ff1FrameRate As String
+		                Dim ff1audiocodec As String
+		                Dim ff1audiochannels As String
 		                
 		                If File1.Name.Contains(".png")  Or File1.Name.Contains(".jpg") Or File1.Name.Contains(".mov") Or File1.Name.Contains(".mp4") Then
 		                  
@@ -1003,12 +1097,30 @@ End
 		                      App.DoEvents
 		                    Loop Until Not theShell.IsRunning
 		                    
+		                    //Audio Codec value
+		                    theShell.Execute fnaudiocodec(File1.NativePath)
+		                    Do
+		                      theShell.Poll
+		                      ff1audiocodec = theShell.Result
+		                      App.DoEvents
+		                    Loop Until Not theShell.IsRunning
+		                    
+		                    //Audio Channels value
+		                    theShell.Execute fnaudiochannels(File1.NativePath)
+		                    Do
+		                      theShell.Poll
+		                      ff1audiochannels = theShell.Result
+		                      App.DoEvents
+		                    Loop Until Not theShell.IsRunning
+		                    
 		                  Else
 		                    ff1 = "FFMpeg Not Setup"
 		                    ff1width = "FFMpeg Not Setup"
 		                    ff1height = "FFMpeg Not Setup"
 		                    ff1Duration = "FFMpeg Not Setup"
 		                    ff1FrameRate = "FFMpeg Not Setup"
+		                    ff1audiocodec = "FFMpeg Not Setup"
+		                    ff1audiochannels = "FFMpeg Not Setup"
 		                  End If
 		                Else
 		                  ff1 = ""
@@ -1016,6 +1128,8 @@ End
 		                  ff1height = ""
 		                  ff1Duration = ""
 		                  ff1FrameRate = ""
+		                  ff1audiocodec = ""
+		                  ff1audiochannels = ""
 		                End If
 		                Var ff1res As String
 		                ff1 = ReplaceAll(ff1, "codec_name=", "")
@@ -1024,9 +1138,11 @@ End
 		                ff1res = ff1width + " x " + ff1height
 		                ff1Duration = ReplaceAll(ff1Duration, "duration=", "")
 		                ff1FrameRate = ReplaceAll(ff1FrameRate, "r_frame_rate=", "")
+		                ff1audiocodec = ReplaceAll(ff1audiocodec, "codec_name=", "")
+		                ff1audiochannels = ReplaceAll(ff1audiochannels, "channels=", "")
 		                
 		                
-		                FileList.AddRow(file1.Name, File1.NativePath, ff1, ff1width, ff1height, ff1FrameRate, ff1Duration)
+		                FileList.AddRow(file1.Name, File1.NativePath, ff1, ff1width, ff1height, ff1FrameRate, ff1Duration, ff1audiocodec, ff1audiochannels)
 		              End If
 		            Next
 		            
@@ -1037,6 +1153,8 @@ End
 		            Dim ff0height As String
 		            Dim ff0Duration As String
 		            Dim ff0FrameRate As String
+		            Dim ff0audiocodec As String
+		            Dim ff0audiochannels As String
 		            
 		            If File0.Name.Contains(".png") Or File0.Name.Contains(".jpg")  Or File0.Name.Contains(".mov") Or File0.Name.Contains(".mp4") Then
 		              
@@ -1081,12 +1199,30 @@ End
 		                  App.DoEvents
 		                Loop Until Not theShell.IsRunning
 		                
+		                //Audio Codec value
+		                theShell.Execute fnaudiocodec(File0.NativePath)
+		                Do
+		                  theShell.Poll
+		                  ff0audiocodec = theShell.Result
+		                  App.DoEvents
+		                Loop Until Not theShell.IsRunning
+		                
+		                //Audio Channels value
+		                theShell.Execute fnaudiochannels(File0.NativePath)
+		                Do
+		                  theShell.Poll
+		                  ff0audiochannels = theShell.Result
+		                  App.DoEvents
+		                Loop Until Not theShell.IsRunning
+		                
 		              Else
 		                ff0 = "FFMpeg Not Setup"
 		                ff0width = "FFMpeg Not Setup"
 		                ff0height = "FFMpeg Not Setup"
 		                ff0Duration = "FFMpeg Not Setup"
 		                ff0FrameRate = "FFMpeg Not Setup"
+		                ff0audiocodec = "FFMpeg Not Setup"
+		                ff0audiochannels = "FFMpeg Not Setup"
 		              End If
 		            Else
 		              ff0 = ""
@@ -1094,6 +1230,8 @@ End
 		              ff0height = ""
 		              ff0Duration = ""
 		              ff0FrameRate = ""
+		              ff0audiocodec = ""
+		              ff0audiochannels = ""
 		            End If
 		            Var ff0res As String
 		            ff0 = ReplaceAll(ff0, "codec_name=", "")
@@ -1102,8 +1240,10 @@ End
 		            ff0res = ff0width + " x " + ff0height
 		            ff0Duration = ReplaceAll(ff0Duration, "duration=", "")
 		            ff0FrameRate = ReplaceAll(ff0FrameRate, "r_frame_rate=", "")
+		            ff0audiocodec = ReplaceAll(ff0audiocodec, "codec_name=", "")
+		            ff0audiochannels = ReplaceAll(ff0audiochannels, "channels=", "")
 		            
-		            FileList.AddRow(File0.Name, File0.NativePath, ff0, ff0width, ff0height, ff0FrameRate, ff0Duration)
+		            FileList.AddRow(File0.Name, File0.NativePath, ff0, ff0width, ff0height, ff0FrameRate, ff0Duration, ff0audiocodec, ff0audiochannels)
 		          End If
 		          
 		        Next
@@ -1176,12 +1316,18 @@ End
 		    output = TextOutputStream.Create(f)
 		    Output.Delimiter = EndOfLine.Native
 		    
+		    Var HeaderLine As String
+		    HeaderLine = "File;Location;Codec;Width;Height;FrameRate;Duration;Audio Codec;Audio Channels"
+		    output.WriteLine(HeaderLine)
+		    
 		    For Each row As DesktopListboxRow In FileList.Rows
 		      
 		      If FileList.CellTextAt(cr) <> "" Then
 		        
 		        Var OutLine As String
-		        Outline = FileList.CellTextAt(cr,0) + ";" + FileList.CellTextAt(cr,1) + ";" + FileList.CellTextAt(cr,2) + ";" + FileList.CellTextAt(cr,3) + ";" + FileList.CellTextAt(cr,4) + ";" + FileList.CellTextAt(cr,5)
+		        Outline = FileList.CellTextAt(cr,0) + ";" + FileList.CellTextAt(cr,1) + ";" + FileList.CellTextAt(cr,2) + ";" + FileList.CellTextAt(cr,3) + ";" + FileList.CellTextAt(cr,4) + ";" + FileList.CellTextAt(cr,5) + ";" + FileList.CellTextAt(cr,6) + ";" + FileList.CellTextAt(cr,7) + ";" + FileList.CellTextAt(cr,8)
+		        Outline = ReplaceAll(Outline, chr(13), "")
+		        Outline = ReplaceAll(Outline, chr(10), "")
 		        output.WriteLine(OutLine) 
 		        
 		      Else
@@ -1194,8 +1340,6 @@ End
 		  Catch e As IOException
 		    MessageBox("Unable to create or write to file.")
 		  End Try
-		  
-		  
 		  
 		End Sub
 	#tag EndEvent
