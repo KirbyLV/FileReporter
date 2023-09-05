@@ -283,8 +283,12 @@ End
 		    ElseIf CodecPopup.SelectedRowIndex = 6 Then
 		      
 		      //Store user defined resolutions in variable
-		      FileReporter.RulesWidth = WidthField.Text
-		      FileReporter.RulesHeight = HeightField.Text
+		      If IsNumeric(WidthField.Text) Then
+		        FileReporter.RulesWidth = WidthField.Text
+		      End
+		      If IsNumeric(HeightField.Text) Then
+		        FileReporter.RulesHeight = HeightField.Text
+		      End
 		      FileReporter.CodecRules = CodecPopup.SelectedRowIndex
 		      self.Close
 		      FileReporter.IdentRadio.Enabled = True
