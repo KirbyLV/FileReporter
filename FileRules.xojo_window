@@ -96,7 +96,7 @@ Begin DesktopWindow FileRules
       FontUnit        =   0
       Height          =   20
       Index           =   -2147483648
-      InitialValue    =   "Select Acceptable Codecs\nD3 - NotchLC, HAP, PNG\nPixera - NotchLC, HAP, VP9, DDS\nMillumin - ProRes, HAP, PNG\nResolume - DXV\nHippotizer - Coming Soon"
+      InitialValue    =   "Select Acceptable Codecs\nD3 - NotchLC, HAP, PNG\nPixera - NotchLC, HAP, VP9, DDS\nMillumin - ProRes, HAP, PNG\nResolume - DXV\nHippotizer - Coming Soon\nCustom Resolution - Enter value below"
       Italic          =   False
       Left            =   20
       LockBottom      =   False
@@ -123,7 +123,7 @@ Begin DesktopWindow FileRules
       AllowTabs       =   False
       BackgroundColor =   &cFFFFFF
       Bold            =   False
-      Enabled         =   False
+      Enabled         =   True
       FontName        =   "System"
       FontSize        =   0.0
       FontUnit        =   0
@@ -149,7 +149,7 @@ Begin DesktopWindow FileRules
       Text            =   ""
       TextAlignment   =   0
       TextColor       =   &c000000
-      Tooltip         =   ""
+      Tooltip         =   "Insert width as whole number"
       Top             =   110
       Transparent     =   False
       Underline       =   False
@@ -164,7 +164,7 @@ Begin DesktopWindow FileRules
       AllowTabs       =   False
       BackgroundColor =   &cFFFFFF
       Bold            =   False
-      Enabled         =   False
+      Enabled         =   True
       FontName        =   "System"
       FontSize        =   0.0
       FontUnit        =   0
@@ -190,7 +190,7 @@ Begin DesktopWindow FileRules
       Text            =   ""
       TextAlignment   =   0
       TextColor       =   &c000000
-      Tooltip         =   ""
+      Tooltip         =   "Insert height as whole number"
       Top             =   110
       Transparent     =   False
       Underline       =   False
@@ -274,10 +274,21 @@ End
 		  
 		  If CodecPopup.SelectedRowIndex >= 0 Then
 		    // No rules selected, top menu item selected, no data passed.
+		    
 		    If CodecPopup.SelectedRowIndex = 0 Then
 		      FileReporter.CodecRules = 0
 		      MessageBox("No Rules Set")
 		      Self.Close
+		      
+		    ElseIf CodecPopup.SelectedRowIndex = 6 Then
+		      
+		      //Store user defined resolutions in variable
+		      FileReporter.RulesWidth = WidthField.Text
+		      FileReporter.RulesHeight = HeightField.Text
+		      FileReporter.CodecRules = CodecPopup.SelectedRowIndex
+		      self.Close
+		      FileReporter.IdentRadio.Enabled = True
+		      
 		    Else
 		      // Menu item selected resulting in rules. Pass integer to CodecRules property variable
 		      FileReporter.CodecRules =  CodecPopup.SelectedRowIndex
@@ -290,6 +301,61 @@ End
 		  
 		  
 		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events CodecPopup
+	#tag Event
+		Sub SelectionChanged(item As DesktopMenuItem)
+		  #If TargetMacOS
+		    #pragma unused item
+		  #EndIf
+		  
+		  If CodecPopup.SelectedRowIndex = 6 Then
+		    HeightField.Visible=True
+		    HeightLabel.Visible=True
+		    WidthField.Visible=True
+		    WidthLabel.Visible=True
+		    RulesCloseButton.Enabled = False
+		  Else
+		    HeightField.Visible=False
+		    HeightLabel.Visible=False
+		    WidthField.Visible=False
+		    WidthLabel.Visible=False
+		    RulesCloseButton.Enabled = True
+		  End
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events WidthField
+	#tag Event
+		Sub FocusLost()
+		  If Not Me.Text.IsEmpty Then
+		    Dim Numberchecker As Boolean
+		    Numberchecker = IsNumeric(me.Text)
+		    If Numberchecker Then
+		      RulesCloseButton.Enabled = True
+		    ElseIf Not Numberchecker Then
+		      MsgBox ("Please enter a numeric value")
+		      RulesCloseButton.Enabled = False
+		    End
+		  End
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events HeightField
+	#tag Event
+		Sub FocusLost()
+		  If Not Me.Text.IsEmpty Then
+		    Dim Numberchecker As Boolean
+		    Numberchecker = IsNumeric(me.Text)
+		    If Numberchecker Then
+		      RulesCloseButton.Enabled = True
+		    ElseIf Not Numberchecker Then
+		      MsgBox ("Please enter a numeric value")
+		      RulesCloseButton.Enabled = False
+		    End
+		  End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -383,8 +449,7 @@ End
 			"6 - Rounded Window"
 			"7 - Global Floating Window"
 			"8 - Sheet Window"
-			"9 - Metal Window"
-			"11 - Modeless Dialog"
+			"9 - Modeless Dialog"
 		#tag EndEnumValues
 	#tag EndViewProperty
 	#tag ViewProperty

@@ -676,6 +676,10 @@ End
 
 
 	#tag Property, Flags = &h0
+		BrowserPath As FolderItem
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		CodecRules As Integer = 0
 	#tag EndProperty
 
@@ -689,6 +693,14 @@ End
 
 	#tag Property, Flags = &h0
 		FolderLocation As FolderItem
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		RulesHeight As String = "0"
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		RulesWidth As String = "0"
 	#tag EndProperty
 
 
@@ -713,7 +725,7 @@ End
 		  dlg.ActionButtonCaption = "Select"
 		  dlg.Title = "Content Location"
 		  dlg.PromptText = "Select the project location containing content"
-		  dlg.InitialFolder = SpecialFolder.Documents
+		  dlg.InitialFolder = BrowserPath
 		  
 		  Dim f As FolderItem
 		  f = dlg.ShowModal
@@ -721,6 +733,7 @@ End
 		    // Use the folder item here
 		    FolderField.Text = f.NativePath
 		    FolderLocation = f
+		    BrowserPath = f
 		  Else
 		    //User Cancelled
 		  End If
@@ -1285,7 +1298,7 @@ End
 		  dlg.ActionButtonCaption = "Select"
 		  dlg.Title = "Content Location"
 		  dlg.PromptText = "Select the project location containing content"
-		  dlg.InitialFolder = SpecialFolder.Documents
+		  dlg.InitialFolder = BrowserPath
 		  
 		  Dim f As FolderItem
 		  f = dlg.ShowModal
@@ -1293,6 +1306,7 @@ End
 		    // Use the folder item here
 		    BrowseField.Text = f.NativePath
 		    ExportLocation = f
+		    BrowserPath = f
 		  Else
 		    //User Cancelled
 		  End If
@@ -1454,8 +1468,7 @@ End
 			"6 - Rounded Window"
 			"7 - Global Floating Window"
 			"8 - Sheet Window"
-			"9 - Metal Window"
-			"11 - Modeless Dialog"
+			"9 - Modeless Dialog"
 		#tag EndEnumValues
 	#tag EndViewProperty
 	#tag ViewProperty
