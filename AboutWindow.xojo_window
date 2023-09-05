@@ -23,7 +23,7 @@ Begin DesktopWindow AboutWindow
    Title           =   "About File Reporter"
    Type            =   1
    Visible         =   True
-   Width           =   600
+   Width           =   748
    Begin DesktopButton AboutOKButton
       AllowAutoDeactivate=   True
       Bold            =   False
@@ -53,7 +53,7 @@ Begin DesktopWindow AboutWindow
       Transparent     =   False
       Underline       =   False
       Visible         =   True
-      Width           =   80
+      Width           =   228
    End
    Begin DesktopSeparator Separator1
       Active          =   False
@@ -63,7 +63,7 @@ Begin DesktopWindow AboutWindow
       Height          =   20
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   20
+      Left            =   94
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -74,7 +74,7 @@ Begin DesktopWindow AboutWindow
       TabIndex        =   1
       TabPanelIndex   =   0
       Tooltip         =   ""
-      Top             =   42
+      Top             =   44
       Transparent     =   False
       Visible         =   True
       Width           =   560
@@ -105,7 +105,7 @@ Begin DesktopWindow AboutWindow
       TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
-      Text            =   "File Reporter\nv2.0"
+      Text            =   "File Reporter\nv3.0"
       TextAlignment   =   2
       TextColor       =   &cF8C51D00
       Tooltip         =   ""
@@ -113,7 +113,7 @@ Begin DesktopWindow AboutWindow
       Transparent     =   False
       Underline       =   False
       Visible         =   True
-      Width           =   100
+      Width           =   248
    End
    Begin DesktopLabel Label2
       AllowAutoDeactivate=   True
@@ -125,7 +125,7 @@ Begin DesktopWindow AboutWindow
       Height          =   297
       Index           =   -2147483648
       Italic          =   False
-      Left            =   8
+      Left            =   38
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -137,7 +137,7 @@ Begin DesktopWindow AboutWindow
       TabIndex        =   3
       TabPanelIndex   =   0
       TabStop         =   True
-      Text            =   "Initially Created Feb 2023 by Josh Spodick\n\nThis is completely beta software, as I have never really written an applicaiton before. I appreciate any help in making this better, but complaints that are not helpfull will be filed in the ""fuck off"" pile.\n\nThis is written to identify files ending in "".mov"", "".mp4"", "".png"", "".jpg"" as that is most of the media files we have to deal with on a daily basis.\n\nThis software relies heavily on FFMPEG being installed and accessible. Thanks to the entire FFMPEG team for creating some awesome free software. And thank you to the Propellerheads and Media Server Professionals that have helped me along and pushed for me to learn how to make this.\n\nThank you to Darren Alexander, CT, and Wookiesoft for giving me plenty of downtime on an autoshow to write this, and to Merlin Alexander for the logo art. To Chris Merriman, Alok Wadhwani, and Cory Froke for the feature suggestions."
+      Text            =   "Initially Created Feb 2023 by Josh Spodick\n\nThis is completely beta software, as I have never really written an applicaiton before. I appreciate any help in making this better, but complaints that are not helpfull will be filed in the ""fuck off"" pile.\n\nThis is written to identify files ending in "".mov"", "".mp4"", "".png"", "".jpg"" as that is most of the media files we have to deal with on a daily basis.\n\nThis software relies heavily on FFMPEG being installed and accessible. Thanks to the entire FFMPEG team for creating some awesome free software. And thank you to the Propellerheads and Media Server Professionals that have helped me along and pushed for me to learn how to make this.\n\nThank you to Darren Alexander, CT, and Wookiesoft for giving me plenty of downtime on an autoshow to write this, and to Merlin Alexander for the logo art. To Chris Merriman, Alok Wadhwani, Cory Froke, and Mac Melto for the feature suggestions."
       TextAlignment   =   0
       TextColor       =   &c000000
       Tooltip         =   ""
@@ -145,7 +145,7 @@ Begin DesktopWindow AboutWindow
       Transparent     =   False
       Underline       =   False
       Visible         =   True
-      Width           =   585
+      Width           =   672
    End
    Begin Canvas CT_Logo
       AllowAutoDeactivate=   True
@@ -158,7 +158,7 @@ Begin DesktopWindow AboutWindow
       Height          =   50
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   530
+      Left            =   678
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   False
@@ -302,8 +302,7 @@ End
 			"6 - Rounded Window"
 			"7 - Global Floating Window"
 			"8 - Sheet Window"
-			"9 - Metal Window"
-			"11 - Modeless Dialog"
+			"9 - Modeless Dialog"
 		#tag EndEnumValues
 	#tag EndViewProperty
 	#tag ViewProperty

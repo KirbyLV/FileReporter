@@ -49,7 +49,7 @@ Begin DesktopWindow FileRules
       TabPanelIndex   =   0
       TabStop         =   True
       Tooltip         =   ""
-      Top             =   121
+      Top             =   139
       Transparent     =   False
       Underline       =   False
       Visible         =   True
@@ -150,7 +150,7 @@ Begin DesktopWindow FileRules
       TextAlignment   =   0
       TextColor       =   &c000000
       Tooltip         =   "Insert width as whole number"
-      Top             =   110
+      Top             =   139
       Transparent     =   False
       Underline       =   False
       ValidationMask  =   ""
@@ -191,7 +191,7 @@ Begin DesktopWindow FileRules
       TextAlignment   =   0
       TextColor       =   &c000000
       Tooltip         =   "Insert height as whole number"
-      Top             =   110
+      Top             =   139
       Transparent     =   False
       Underline       =   False
       ValidationMask  =   ""
@@ -224,7 +224,7 @@ Begin DesktopWindow FileRules
       TextAlignment   =   0
       TextColor       =   &c000000
       Tooltip         =   ""
-      Top             =   84
+      Top             =   113
       Transparent     =   False
       Underline       =   False
       Visible         =   False
@@ -256,11 +256,43 @@ Begin DesktopWindow FileRules
       TextAlignment   =   0
       TextColor       =   &c000000
       Tooltip         =   ""
-      Top             =   84
+      Top             =   113
       Transparent     =   False
       Underline       =   False
       Visible         =   False
       Width           =   100
+   End
+   Begin DesktopLabel ResInfoLabel
+      AllowAutoDeactivate=   True
+      Bold            =   False
+      Enabled         =   False
+      FontName        =   "System"
+      FontSize        =   0.0
+      FontUnit        =   0
+      Height          =   25
+      Index           =   -2147483648
+      Italic          =   False
+      Left            =   20
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   8
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   "Fill in one or both resolutions. If field is left blank, data will not be analyzed"
+      TextAlignment   =   0
+      TextColor       =   &c000000
+      Tooltip         =   ""
+      Top             =   84
+      Transparent     =   False
+      Underline       =   False
+      Visible         =   False
+      Width           =   483
    End
 End
 #tag EndDesktopWindow
@@ -320,12 +352,14 @@ End
 		    HeightLabel.Visible=True
 		    WidthField.Visible=True
 		    WidthLabel.Visible=True
+		    ResInfoLabel.Visible=True
 		    RulesCloseButton.Enabled = False
 		  Else
 		    HeightField.Visible=False
 		    HeightLabel.Visible=False
 		    WidthField.Visible=False
 		    WidthLabel.Visible=False
+		    ResInfoLabel.Visible=False
 		    RulesCloseButton.Enabled = True
 		  End
 		End Sub

@@ -885,7 +885,67 @@ End
 		      Else
 		      End If
 		      
+		    ElseIf codec = 6 Then
+		      
+		      //MessageBox("Custom Resolution")
+		      
+		      
+		      //Rules set to Custom Resolution
+		      If row <= Me.LastRowIndex Then
+		        
+		        If FileReporter.RulesWidth>"" AND FileReporter.RulesHeight>"" Then
+		          If Me.CellTextAt(row,3).Contains(FileReporter.RulesWidth) AND Me.CellTextAt(row,4).Contains(FileReporter.RulesHeight) Then
+		            
+		            If Color.IsDarkMode Then
+		              g.DrawingColor = &cffffff
+		            Else 
+		              g.DrawingColor = &c000000
+		            End If
+		            
+		          Else 
+		            
+		            g.DrawingColor = &cff0000
+		            
+		          End If
+		          
+		        ElseIf FileReporter.RulesWidth>"" AND FileReporter.RulesHeight=""Then
+		          If Me.CellTextAt(row,3).Contains(FileReporter.RulesWidth) Then
+		            
+		            If Color.IsDarkMode Then
+		              g.DrawingColor = &cffffff
+		            Else 
+		              g.DrawingColor = &c000000
+		            End If
+		            
+		          Else 
+		            
+		            g.DrawingColor = &cff0000
+		            
+		          End If
+		          
+		        ElseIf FileReporter.RulesHeight>"" AND FileReporter.RulesWidth="" Then
+		          If Me.CellTextAt(row,4).Contains(FileReporter.RulesHeight) Then
+		            
+		            If Color.IsDarkMode Then
+		              g.DrawingColor = &cffffff
+		            Else 
+		              g.DrawingColor = &c000000
+		            End If
+		            
+		          Else 
+		            
+		            g.DrawingColor = &cff0000
+		            
+		          End If
+		          
+		        End If
+		      Else
+		        
+		        
+		      End
+		      
 		    End If
+		    
 		  Else
 		    
 		  End If
