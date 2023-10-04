@@ -90,7 +90,7 @@ Begin DesktopWindow FileReporter
       TabPanelIndex   =   0
       TabStop         =   True
       Tooltip         =   "Open directory of media files to analyze"
-      Top             =   43
+      Top             =   45
       Transparent     =   False
       Underline       =   False
       Visible         =   True
@@ -1689,5 +1689,21 @@ End
 		InitialValue=""
 		Type="String"
 		EditorType="MultiLineEditor"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="RulesHeight"
+		Visible=false
+		Group="Behavior"
+		InitialValue="0"
+		Type="String"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="RulesWidth"
+		Visible=false
+		Group="Behavior"
+		InitialValue="0"
+		Type="String"
+		EditorType=""
 	#tag EndViewProperty
 #tag EndViewBehavior
