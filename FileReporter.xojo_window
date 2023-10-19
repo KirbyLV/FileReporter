@@ -993,13 +993,30 @@ End
 		    //End If
 		  End If
 		  
+		  //Setting full access permissions for users
+		  var p As New Permissions(&o644)
+		  p.OwnerRead = True
+		  p.OwnerWrite = True
+		  p.OwnerExecute = True
+		  p.GroupRead = True
+		  p.GroupWrite = True
+		  p.GroupExecute = True
+		  p.OthersRead = True
+		  p.OthersWrite = True
+		  p.OthersExecute = True
+		  p.UidBit = True
+		  
+		  //Set file permissions
+		  FolderLocation.Permissions = p
+		  
 		  
 		  //Check to see if path is a proper location
 		  If FolderLocation.Exists Then
 		    //Check to see if folder is actually a folder
 		    If FolderLocation.IsFolder Then
 		      //Check to see if permissions are set
-		      If FolderLocation.IsReadable Then
+		      If FolderLocation.IsFolder Then
+		        //Originsal: If FolderLocation.IsReadable Then
 		        //Clears existing LsitBox
 		        FileList.RemoveAllRows
 		        
@@ -1696,7 +1713,7 @@ End
 		Group="Behavior"
 		InitialValue="0"
 		Type="String"
-		EditorType=""
+		EditorType="MultiLineEditor"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="RulesWidth"
@@ -1704,6 +1721,6 @@ End
 		Group="Behavior"
 		InitialValue="0"
 		Type="String"
-		EditorType=""
+		EditorType="MultiLineEditor"
 	#tag EndViewProperty
 #tag EndViewBehavior
