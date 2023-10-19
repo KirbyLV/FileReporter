@@ -197,7 +197,7 @@ Begin DesktopWindow FileReporter
       TabIndex        =   4
       TabPanelIndex   =   0
       TabStop         =   True
-      Text            =   "File List Creator - Creative Technology"
+      Text            =   "File List Creator - Creative Technology - NAS Version"
       TextAlignment   =   2
       TextColor       =   &cF8C51D00
       Tooltip         =   ""

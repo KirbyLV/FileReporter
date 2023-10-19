@@ -105,7 +105,7 @@ Begin DesktopWindow AboutWindow
       TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
-      Text            =   "File Reporter\nv3.0"
+      Text            =   "File Reporter\r\nv3.2 NAS"
       TextAlignment   =   2
       TextColor       =   &cF8C51D00
       Tooltip         =   ""
